@@ -26,7 +26,7 @@ const app = express();
 // 1) GLOBAL MIDDLEWARES
 // Allow Access
 const allowedOrigins = [
-  'https://ai4mpox-t4bs.vercel.app/',
+  'https://ai4mpox-web.vercel.app/',
   'https://ai4mpox.vercel.app/',
 ];
 
