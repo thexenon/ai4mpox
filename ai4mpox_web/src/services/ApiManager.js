@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const link = 'http://localhost:3000';
+const link = 'https://ai4mpox.onrender.com';
 
 const ApiManager = axios.create({
   baseURL: `${link}`,
