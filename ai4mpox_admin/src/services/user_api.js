@@ -8,6 +8,7 @@ export const user_login = async (reqData) => {
         'Content-Type': 'application/json',
       },
       data: reqData,
+      withCredentials: true,
     });
     return result;
   } catch (error) {
@@ -23,6 +24,7 @@ export const userPassword = async (reqData) => {
         'Content-Type': 'application/json',
       },
       data: reqData,
+      withCredentials: true,
     });
     return result;
   } catch (error) {
@@ -53,6 +55,7 @@ export const user_signup = async (reqData) => {
         'Content-Type': 'application/json',
       },
       data: reqData,
+      withCredentials: true,
     });
     return result;
   } catch (error) {
@@ -68,6 +71,7 @@ export const submitComment = async (reqData, reqParams) => {
         'Content-Type': 'application/json',
       },
       data: reqData,
+      withCredentials: true,
     });
     return result;
   } catch (error) {
@@ -83,6 +87,7 @@ export const submitPost = async (reqData, reqParams) => {
         'Content-Type': 'application/json',
       },
       data: reqData,
+      withCredentials: true,
     });
     return result;
   } catch (error) {
@@ -98,6 +103,7 @@ export const submitUpdate = async (reqData, reqParams) => {
         'Content-Type': 'application/json',
       },
       data: reqData,
+      withCredentials: true,
     });
     return result;
   } catch (error) {

@@ -28,6 +28,8 @@ const app = express();
 const allowedOrigins = [
   'https://ai4mpox-t4bs.vercel.app/',
   'https://ai4mpox.vercel.app/',
+  'http://localhost:5173',
+  'http://localhost:5174',
 ];
 
 const corsOptions = {
@@ -39,15 +41,24 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Allow preflight
 
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept',
+//   );
+//   next();
+// });
+
 // View engine
-// app.set('view engine', 'pug');
-// app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
