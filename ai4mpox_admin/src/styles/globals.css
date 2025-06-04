@@ -1,0 +1,29 @@
+.my-grid-head {
+  display: grid;
+  margin-top: 20px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.addnew {
+  border: 2px solid blue;
+  font-size: larger;
+  font-weight: bolder;
+  color: white;
+  background: rgb(0, 162, 255);
+  padding: 5px 15px;
+  width: 120px;
+  border-radius: 20px;
+}
+
+.add-new-form label {
+  display: block;
+  margin: 20px 10px;
+}
+
+.add-new-form input {
+  display: block;
+}
+.add-new-form input[type='text'] {
+  padding: 5px 15px;
+  width: 90%;
+}
