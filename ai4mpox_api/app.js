@@ -26,7 +26,7 @@ const app = express();
 // 1) GLOBAL MIDDLEWARES
 // Allow Access
 const allowedOrigins = [
-  'https://ai4mpox-web.vercel.app/',
+  'https://ai4mpox-t4bs.vercel.app/',
   'https://ai4mpox.vercel.app/',
 ];
 
@@ -43,14 +43,14 @@ app.use(
   }),
 );
 
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content-Type, Accept',
-//   );
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
 
 // View engine
 app.set('view engine', 'pug');
