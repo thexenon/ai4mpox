@@ -27,7 +27,7 @@ const SignIn = () => {
     setError('');
     try {
       await user_login({ email, password }).then(async (result) => {
-        if (result.status === 200) {
+        if (result.status === 200 || result.status === 201) {
           // Save token and user to localStorage
           localStorage.setItem('token', result.data.token);
           localStorage.setItem('user', JSON.stringify(result.data.data.user));
@@ -36,14 +36,11 @@ const SignIn = () => {
           setError('');
           navigate('/dashboard', { replace: true });
         } else {
-          setError('Invalid credentials');
+          setError(result.message || 'Failed to sign in');
         }
       });
     } catch (err) {
       setError(err?.message || 'An error occurred during sign in');
-      console.log('====================================');
-      console.log(err);
-      console.log('====================================');
     }
     setLoading(false);
   };
