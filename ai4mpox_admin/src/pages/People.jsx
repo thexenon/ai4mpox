@@ -9,9 +9,7 @@ const People = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const cookie = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('jwt='));
+    const cookie = document.cookie;
     fetchItems('people', cookie)
       .then((data) => {
         setPeople(data.data.data.data);

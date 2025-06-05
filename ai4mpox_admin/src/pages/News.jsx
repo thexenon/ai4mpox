@@ -9,10 +9,6 @@ const News = () => {
   const [error, setError] = useState('');
   const [expandedId, setExpandedId] = useState(null);
 
-  const handleExpand = (id) => {
-    setExpandedId((prev) => (prev === id ? null : id));
-  };
-
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this news item?'))
       return;
@@ -33,7 +29,8 @@ const News = () => {
   };
 
   useEffect(() => {
-    fetchItems('news')
+    const cookie = document.cookie;
+    fetchItems('news', cookie)
       .then((data) => {
         setNews(data.data.data.data);
         setLoading(false);

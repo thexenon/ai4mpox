@@ -17,7 +17,6 @@ const Settings = () => {
   const [userRole, setUserRole] = useState('');
 
   useEffect(() => {
-    const cookie = document.cookie;
     const currentUser = JSON.parse(localStorage.getItem('user'));
     if (!currentUser) {
       setForm(null);
@@ -25,6 +24,7 @@ const Settings = () => {
       return;
     }
     setUserRole(currentUser.role ? currentUser.role.toUpperCase() : '');
+    const cookie = document.cookie;
     fetchItems('users', cookie)
       .then((data) => {
         const users = data.data.data.data;

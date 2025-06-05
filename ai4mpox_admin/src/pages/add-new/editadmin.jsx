@@ -15,9 +15,7 @@ export default function EditAdmin() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const userId = params.get('id');
-    const cookie = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('jwt='));
+    const cookie = document.cookie;
     if (!userId) {
       setError('No user selected');
       setLoading(false);

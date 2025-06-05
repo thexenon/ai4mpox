@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchItems } from '../services/api';
+import { deleteItem } from '../services/api';
 
 export default function AdminPage() {
   const [users, setUsers] = useState([]);
@@ -25,6 +26,19 @@ export default function AdminPage() {
         setLoading(false);
       });
   }, []);
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this user?')) return;
+    try {
+      const item = users.find((u) => u.id === id || u._id === id);
+      const cookie = document.cookie;
+      await deleteItem(item, 'users', cookie);
+      setUsers((prev) => prev.filter((u) => u.id !== id && u._id !== id));
+      alert('User deleted successfully.');
+    } catch (err) {
+      alert('Failed to delete user.');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
@@ -51,7 +65,7 @@ export default function AdminPage() {
             {users.map((user) => (
               <div
                 key={user.id}
-                className="bg-white rounded-lg shadow p-6 flex flex-col cursor-pointer hover:shadow-lg transition-shadow"
+                className="bg-white rounded-lg shadow p-6 flex flex-col cursor-pointer hover:shadow-lg transition-shadow relative"
                 onClick={() => navigate(`/add-new/editadmin?id=${user.id}`)}
                 role="button"
                 tabIndex={0}
@@ -74,6 +88,15 @@ export default function AdminPage() {
                     ? new Date(user.createdAt).toLocaleString()
                     : ''}
                 </div>
+                <button
+                  className="absolute top-4 right-4 px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-xs rounded shadow"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(user.id);
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             ))}
           </div>
