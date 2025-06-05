@@ -10,7 +10,8 @@ export default function AdminPage() {
 
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem('user'));
-    fetchItems('users')
+    const cookie = document.cookie;
+    fetchItems('users', cookie)
       .then((data) => {
         const allUsers = data.data.data.data;
         const filteredUsers = allUsers.filter(

@@ -9,7 +9,8 @@ const Reports = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchItems('reports')
+    const cookie = document.cookie;
+    fetchItems('reports', cookie)
       .then((data) => {
         setReports(data.data.data.data);
         setLoading(false);

@@ -20,8 +20,7 @@ const News = () => {
       // Find the item object by id
       const item = news.find((n) => n.id === id || n._id === id);
       // Get the cookie string for jwt or token
-      const cookie =
-        document.cookie.split('; ').find((row) => row.startsWith('jwt=')) || '';
+      const cookie = document.cookie;
       await deleteItem(item, 'news', cookie);
       setExpandedId(null); // Collapse any expanded item
       alert('News item deleted successfully.');

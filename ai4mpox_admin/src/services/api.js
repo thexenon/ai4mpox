@@ -1,7 +1,6 @@
 import axios from 'axios';
 const API_BASE_URL = 'https://ai4mpox.onrender.com/api/v1';
-const cookies =
-  document.cookie.split('; ').find((row) => row.startsWith('jwt=')) || '';
+const cookies = document.cookie;
 
 export const fetchItems = (params, cookie) => {
   return axios.request({

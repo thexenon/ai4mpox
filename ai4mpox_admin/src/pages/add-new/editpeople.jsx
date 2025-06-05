@@ -22,8 +22,7 @@ export default function EditUserForm() {
       setLoading(false);
       return;
     }
-    const cookie =
-      document.cookie.split('; ').find((row) => row.startsWith('jwt=')) || '';
+    const cookie = document.cookie;
 
     fetchItems('people', cookie)
       .then((data) => {

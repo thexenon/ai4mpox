@@ -9,7 +9,10 @@ const People = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchItems('people')
+    const cookie = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('jwt='));
+    fetchItems('people', cookie)
       .then((data) => {
         setPeople(data.data.data.data);
         setLoading(false);
@@ -24,8 +27,7 @@ const People = () => {
     if (!window.confirm('Are you sure you want to delete this person?')) return;
     try {
       const item = people.find((p) => p.id === id || p._id === id);
-      const cookie =
-        document.cookie.split('; ').find((row) => row.startsWith('jwt=')) || '';
+      const cookie = document.cookie;
       await deleteItem(item, 'people', cookie);
       setPeople((prev) => prev.filter((p) => p.id !== id && p._id !== id));
       alert('Person deleted successfully.');
