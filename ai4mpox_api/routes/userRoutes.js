@@ -12,25 +12,25 @@ router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
 // Protect all routes after this middleware instead of doing it in each line
-router.use(authController.protect);
+// router.use(authController.protect);
 
-router.patch('/updateMyPassword', authController.updatePassword);
-router.get('/me', userController.getMe, userController.getSingleUser);
-router.patch('/updateMe', userController.updateMe);
-router.delete('/deleteMe', userController.deleteMe);
+router.patch('/updateMyPassword',authController.protect, authController.updatePassword);
+router.get('/me',authController.protect,  userController.getMe, userController.getSingleUser);
+router.patch('/updateMe',authController.protect,  userController.updateMe);
+router.delete('/deleteMe',authController.protect,  userController.deleteMe);
 
 // Global Routes
 router
   .route('/')
   .get(userController.getAllUsers)
-  .post(userController.addNewUser);
+  .post(authController.protect, userController.addNewUser);
 
-router.use(authController.restrictTo('admin', 'superadmin'));
+// router.use(authController.restrictTo('admin', 'superadmin'));
 
 router
   .route('/:id')
   .get(userController.getSingleUser)
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
+  .patch(authController.protect,authController.restrictTo('admin', 'superadmin'),  userController.updateUser)
+  .delete(authController.protect, authController.restrictTo('admin', 'superadmin'), userController.deleteUser);
 
 module.exports = router;
