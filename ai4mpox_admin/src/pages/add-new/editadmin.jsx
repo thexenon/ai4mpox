@@ -15,13 +15,12 @@ export default function EditAdmin() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const userId = params.get('id');
-    const cookie = document.cookie;
     if (!userId) {
       setError('No user selected');
       setLoading(false);
       return;
     }
-    fetchItems('users', cookie)
+    fetchItems('users')
       .then((data) => {
         const users = data.data.data.data;
         const user = users.find(
@@ -57,11 +56,9 @@ export default function EditAdmin() {
     setSaving(true);
     setMessage('');
     try {
-      const cookie = document.cookie;
       const result = await submitUserUpdate(
         form,
-        `users/${new URLSearchParams(location.search).get('id')}`,
-        cookie
+        `users/${new URLSearchParams(location.search).get('id')}`
       );
       if (result.status === 200) {
         setMessage('User updated successfully!');

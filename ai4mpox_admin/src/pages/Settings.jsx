@@ -24,8 +24,7 @@ const Settings = () => {
       return;
     }
     setUserRole(currentUser.role ? currentUser.role.toUpperCase() : '');
-    const cookie = document.cookie;
-    fetchItems('users', cookie)
+    fetchItems('users')
       .then((data) => {
         const users = data.data.data.data;
         const user = users.find(

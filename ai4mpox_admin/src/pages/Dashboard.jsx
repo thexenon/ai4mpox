@@ -18,12 +18,11 @@ const Dashboard = () => {
       setLoading(true);
       setError('');
       try {
-        const cookie = document.cookie;
         const [newsRes, peopleRes, reportsRes, usersRes] = await Promise.all([
-          fetchItems('news', cookie),
-          fetchItems('people', cookie),
-          fetchItems('reports', cookie),
-          fetchItems('users', cookie),
+          fetchItems('news'),
+          fetchItems('people'),
+          fetchItems('reports'),
+          fetchItems('users'),
         ]);
         setCounts({
           news: newsRes.data.data.data.length,

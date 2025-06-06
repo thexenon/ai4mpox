@@ -45,7 +45,10 @@ const reportSchema = new mongoose.Schema(
       default: 'suspected',
       trim: true,
     },
-    // Add other disease report fields as needed
+    active: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,
@@ -53,6 +56,11 @@ const reportSchema = new mongoose.Schema(
 );
 
 reportSchema.index({ location: '2dsphere' });
+
+reportSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
 
 const Report = mongoose.model('Report', reportSchema);
 

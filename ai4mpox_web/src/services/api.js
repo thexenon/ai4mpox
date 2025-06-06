@@ -5,6 +5,10 @@ export const fetchItems = async (params) => {
     const result = await ApiManager(`/api/v1/${params}`, {
       method: 'GET',
       withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     });
     return result;
   } catch (error) {

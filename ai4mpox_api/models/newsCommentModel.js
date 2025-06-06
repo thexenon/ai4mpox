@@ -44,6 +44,11 @@ newsCommentSchema.pre(/^find/, function (next) {
   next();
 });
 
+newsCommentSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 const NewsComment = mongoose.model('NewsComment', newsCommentSchema);
 
 module.exports = NewsComment;

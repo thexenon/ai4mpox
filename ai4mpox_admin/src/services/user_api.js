@@ -1,4 +1,5 @@
 import ApiManager from './ApiManager';
+const token = localStorage.getItem('token');
 
 export const user_login = async (reqData) => {
   try {
@@ -6,6 +7,7 @@ export const user_login = async (reqData) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       data: reqData,
       withCredentials: true,
@@ -22,6 +24,7 @@ export const userPassword = async (reqData) => {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       data: reqData,
       withCredentials: true,
@@ -38,6 +41,7 @@ export const forgotPass = async (reqData) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       data: reqData,
     });
@@ -53,6 +57,7 @@ export const user_signup = async (reqData) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       data: reqData,
       withCredentials: true,
@@ -69,6 +74,7 @@ export const submitComment = async (reqData, reqParams) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       data: reqData,
       withCredentials: true,
@@ -85,6 +91,7 @@ export const submitPost = async (reqData, reqParams) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       data: reqData,
       withCredentials: true,
@@ -101,6 +108,7 @@ export const submitUpdate = async (reqData, reqParams) => {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       data: reqData,
       withCredentials: true,
@@ -111,12 +119,14 @@ export const submitUpdate = async (reqData, reqParams) => {
   }
 };
 
-export const submitUserUpdate = async (reqData, reqParams, cookie) => {
+export const submitUserUpdate = async (reqData, reqParams) => {
   try {
     const result = await ApiManager(`/api/v1/${reqParams}`, {
       method: 'PATCH',
-
-      headers: cookie,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
       withCredentials: true,
       data: reqData,
     });

@@ -11,8 +11,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem('user'));
-    const cookie = document.cookie;
-    fetchItems('users', cookie)
+    fetchItems('users')
       .then((data) => {
         const allUsers = data.data.data.data;
         const filteredUsers = allUsers.filter(
@@ -31,8 +30,7 @@ export default function AdminPage() {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
       const item = users.find((u) => u.id === id || u._id === id);
-      const cookie = document.cookie;
-      await deleteItem(item, 'users', cookie);
+      await deleteItem(item, 'users');
       setUsers((prev) => prev.filter((u) => u.id !== id && u._id !== id));
       alert('User deleted successfully.');
     } catch (err) {

@@ -38,7 +38,6 @@ const corsOptions = {
     console.log('🌍 Allowed Origins:', allowedOrigins);
     console.log('🌍 Incoming Origin:', origin);
     console.log('====================================');
-
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -110,7 +109,7 @@ app.use((req, res, next) => {
 
 app.use(compression());
 // 3) Routes
-// app.use('/', viewRouter);
+app.use('/', newsRouter);
 app.use('/api/v1/newscomments', newsCommentRouter);
 app.use('/api/v1/news', newsRouter);
 app.use('/api/v1/reports', reportsRouter);

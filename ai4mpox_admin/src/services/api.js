@@ -1,30 +1,39 @@
 import axios from 'axios';
 const API_BASE_URL = 'https://ai4mpox.onrender.com/api/v1';
-const cookies = document.cookie;
+const token = localStorage.getItem('token');
 
-export const fetchItems = (params, cookie) => {
+export const fetchItems = (params) => {
   return axios.request({
     method: 'GET',
     url: `${API_BASE_URL}/${params}/`,
-    headers: cookie || cookies,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
     withCredentials: true,
   });
 };
 
-export const fetchItem = (params, cookie) => {
+export const fetchItem = (params) => {
   return axios.request({
     method: 'GET',
     url: `${API_BASE_URL}/${params}/${item.id || item._id}`,
-    headers: cookie || cookies,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
     withCredentials: true,
   });
 };
 
-export const deleteItem = (item, params, cookie) => {
+export const deleteItem = (item, params) => {
   return axios.request({
     method: 'DELETE',
     url: `${API_BASE_URL}/${params}/${item.id || item._id}`,
-    headers: cookie || cookies,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
     withCredentials: true,
   });
 };

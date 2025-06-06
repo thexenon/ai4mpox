@@ -22,9 +22,8 @@ export default function EditUserForm() {
       setLoading(false);
       return;
     }
-    const cookie = document.cookie;
 
-    fetchItems('people', cookie)
+    fetchItems('people')
       .then((data) => {
         const users = data.data.data.data;
         // Fix: user.id may be _id or id, and userId may be string or number

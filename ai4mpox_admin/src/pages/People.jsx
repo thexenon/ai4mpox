@@ -9,8 +9,7 @@ const People = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const cookie = document.cookie;
-    fetchItems('people', cookie)
+    fetchItems('people')
       .then((data) => {
         setPeople(data.data.data.data);
         setLoading(false);
@@ -25,8 +24,7 @@ const People = () => {
     if (!window.confirm('Are you sure you want to delete this person?')) return;
     try {
       const item = people.find((p) => p.id === id || p._id === id);
-      const cookie = document.cookie;
-      await deleteItem(item, 'people', cookie);
+      await deleteItem(item, 'people');
       setPeople((prev) => prev.filter((p) => p.id !== id && p._id !== id));
       alert('Person deleted successfully.');
     } catch (err) {

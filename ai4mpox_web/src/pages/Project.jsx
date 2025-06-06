@@ -58,34 +58,112 @@ function getRegionFromCoordinates([lng, lat]) {
       ],
     },
     {
-      name: 'Ashanti',
+      name: 'Central',
       bounds: [
-        [-2.0, 6.5],
-        [-0.5, 7.5],
-      ],
-    },
-    {
-      name: 'Northern',
-      bounds: [
-        [-2.5, 8.5],
-        [-0.5, 10.5],
-      ],
-    },
-    {
-      name: 'Volta',
-      bounds: [
-        [0.0, 6.0],
-        [1.2, 8.0],
+        [-2.0, 4.9],
+        [-0.5, 6.0],
       ],
     },
     {
       name: 'Western',
       bounds: [
-        [-3.2, 4.7],
-        [-1.5, 6.0],
+        [-3.2, 4.5],
+        [-1.6, 6.0],
+      ],
+    },
+    {
+      name: 'Western North',
+      bounds: [
+        [-3.0, 5.4],
+        [-1.8, 6.8],
+      ],
+    },
+    {
+      name: 'Eastern',
+      bounds: [
+        [-1.3, 5.7],
+        [0.2, 7.1],
+      ],
+    },
+    {
+      name: 'Volta',
+      bounds: [
+        [-0.2, 5.3],
+        [1.2, 8.5],
+      ],
+    },
+    {
+      name: 'Oti',
+      bounds: [
+        [-0.3, 7.8],
+        [0.9, 9.4],
+      ],
+    },
+    {
+      name: 'Ashanti',
+      bounds: [
+        [-2.2, 5.8],
+        [-0.5, 7.6],
+      ],
+    },
+    {
+      name: 'Bono',
+      bounds: [
+        [-2.7, 7.3],
+        [-1.6, 8.5],
+      ],
+    },
+    {
+      name: 'Bono East',
+      bounds: [
+        [-1.8, 7.2],
+        [-0.4, 8.7],
+      ],
+    },
+    {
+      name: 'Ahafo',
+      bounds: [
+        [-2.8, 6.3],
+        [-1.6, 7.5],
+      ],
+    },
+    {
+      name: 'Northern',
+      bounds: [
+        [-1.5, 8.2],
+        [-0.2, 9.6],
+      ],
+    },
+    {
+      name: 'Savannah',
+      bounds: [
+        [-2.5, 8.0],
+        [-1.2, 9.8],
+      ],
+    },
+    {
+      name: 'North East',
+      bounds: [
+        [-0.6, 9.3],
+        [0.5, 10.6],
+      ],
+    },
+    {
+      name: 'Upper East',
+      bounds: [
+        [-1.0, 10.3],
+        [0.4, 11.2],
+      ],
+    },
+    {
+      name: 'Upper West',
+      bounds: [
+        [-2.8, 9.6],
+        [-1.0, 11.1],
       ],
     },
   ];
+
   for (const region of regions) {
     const [[lngMin, latMin], [lngMax, latMax]] = region.bounds;
     if (lng >= lngMin && lng <= lngMax && lat >= latMin && lat <= latMax) {
