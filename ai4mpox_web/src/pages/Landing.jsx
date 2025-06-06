@@ -334,7 +334,7 @@ function Landing() {
                   <img
                     src={person.image}
                     alt={person.name}
-                    className="w-20 h-20 object-cover rounded-full border-2 border-blue-200 mb-2"
+                    className="w-30 h-30 object-cover rounded-full border-2 border-blue-200 mb-2"
                   />
                 )}
                 <div className="text-blue-700 font-bold text-base text-center mb-1">

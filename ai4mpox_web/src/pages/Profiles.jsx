@@ -32,7 +32,7 @@ function Profiles() {
               <img
                 src={person.image}
                 alt={person.name}
-                className="w-28 h-28 object-cover rounded-full border-4 border-blue-200 mb-4 group-hover:scale-105 transition-transform"
+                className="w-50 h-50 object-cover rounded-full border-4 border-blue-200 mb-4 group-hover:scale-105 transition-transform"
               />
             )}
             <h2 className="text-xl font-bold text-gray-800 mb-1 group-hover:text-blue-700 transition-colors">
@@ -76,7 +76,7 @@ function ProfileModal({ person, onClose }) {
               <img
                 src={person.image}
                 alt={person.name}
-                className="w-40 h-40 object-cover rounded-full border-4 border-blue-200 mb-4"
+                className="w-56 h-56 object-cover rounded-full border-4 border-blue-200 mb-4"
               />
             )}
             <h2 className="text-2xl md:text-3xl font-bold text-center text-blue-700 mb-1">
