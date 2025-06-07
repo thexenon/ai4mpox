@@ -21,7 +21,7 @@ const AddNews = () => {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', 'Server Images');
-      formData.append('folder', 'news-images');
+      formData.append('folder', 'AI4MPOX/news-images');
       const response = await fetch(
         'https://api.cloudinary.com/v1_1/du0sqginv/image/upload',
         {
