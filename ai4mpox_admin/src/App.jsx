@@ -22,7 +22,9 @@ import EditPeople from './pages/add-new/editpeople';
 import Reports from './pages/Reports';
 import AddReport from './pages/add-new/report';
 import EditReport from './pages/add-new/editreport';
-// import AddReport from './pages/add-new/report';
+import Slide from './pages/Slide';
+import AddSlide from './pages/add-new/slide';
+import EditSlide from './pages/add-new/editslide';
 
 function checkCookie(name) {
   return document.cookie
@@ -65,6 +67,9 @@ function App() {
           <Route path="/reports" element={<Reports />} />
           <Route path="/add-new/report" element={<AddReport />} />
           <Route path="/add-new/editreport" element={<EditReport />} />
+          <Route path="/slide" element={<Slide />} />
+          <Route path="/add-new/slide" element={<AddSlide />} />
+          <Route path="/add-new/editslide" element={<EditSlide />} />
         </Route>
       </Routes>
     </Router>

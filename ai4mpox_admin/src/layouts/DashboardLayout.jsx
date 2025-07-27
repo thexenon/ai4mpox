@@ -44,6 +44,14 @@ const DashboardLayout = () => {
             </li>
             <li>
               <Link
+                className={pathname === '/slide' ? 'font-semibold' : ''}
+                to="/slide"
+              >
+                Slide
+              </Link>
+            </li>
+            <li>
+              <Link
                 className={pathname === '/news' ? 'font-semibold' : ''}
                 to="/news"
               >

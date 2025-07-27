@@ -14,6 +14,7 @@ const cookieParser = require('cookie-parser');
 const viewRouter = require('./routes/viewRoutes');
 const userRouter = require('./routes/userRoutes');
 const peopleRouter = require('./routes/peopleRoutes');
+const slideRouter = require('./routes/slideRoutes');
 const newsRouter = require('./routes/newsRoutes');
 const reportsRouter = require('./routes/reportRoutes');
 const newsCommentRouter = require('./routes/newsCommentRoutes');
@@ -115,6 +116,7 @@ app.use('/api/v1/news', newsRouter);
 app.use('/api/v1/reports', reportsRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/people', peopleRouter);
+app.use('/api/v1/slide', slideRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Error: ${req.originalUrl} is not on this server`, 404));
