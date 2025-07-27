@@ -8,14 +8,6 @@ function Landing() {
   const [profiles, setProfiles] = useState([]);
   const [slides, setSlides] = useState([]);
 
-  const [slideIdx, setSlideIdx] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSlideIdx((idx) => (idx + 1) % slides.length);
-    }, 60000); // 1 minute
-    return () => clearInterval(interval);
-  }, [slides.length]);
-
   useEffect(() => {
     fetchItems('slide').then((res) => setSlides(res.data.data.data));
     fetchItems('news').then((res) => setNews(res.data.data.data.slice(0, 5)));
@@ -27,6 +19,14 @@ function Landing() {
     );
   }, []);
 
+  const [slideIdx, setSlideIdx] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSlideIdx((idx) => (idx + 1) % slides.length);
+    }, 60000); // 1 minute
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white p-0">
       <div className="max-w-6xl mx-auto py-12 px-4">
@@ -36,7 +36,7 @@ function Landing() {
         <div className="w-[80vw] max-w-5xl mx-auto mb-10 text-center transition-all duration-700 relative overflow-hidden rounded-xl shadow-lg min-h-[360px]">
           {/* Background image for slide */}
           <img
-            src={slides[slideIdx].image}
+            src={slides[slideIdx].image || '/img/mpox01.jpg'}
             alt="slide background"
             className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none select-none blur-[1px]"
             style={{ zIndex: 0 }}
