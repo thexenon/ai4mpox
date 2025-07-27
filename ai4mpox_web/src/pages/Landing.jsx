@@ -10,15 +10,22 @@ function Landing() {
   const [slideIdx, setSlideIdx] = useState(0);
 
   useEffect(() => {
-    fetchItems('slide').then((res) => setSlides(res.data.data.data));
-    fetchItems('news').then((res) => setNews(res.data.data.data.slice(0, 5)));
-    fetchItems('reports').then((res) =>
-      setReports(res.data.data.data.slice(0, 5))
-    );
-    fetchItems('people').then((res) =>
-      setProfiles(res.data.data.data.slice(0, 5))
-    );
-  }, []);
+    async function fetchAll() {
+      try {
+        const [slideRes, newsRes, reportRes, peopleRes] = await Promise.all([
+          fetchItems('slide'),
+          fetchItems('news'),
+          fetchItems('reports'),
+          fetchItems('people'),
+        ]);
+        setSlides(slideRes.data.data.data);
+        setNews(newsRes.data.data.data.slice(0, 5));
+        setReports(reportRes.data.data.data.slice(0, 5));
+        setProfiles(peopleRes.data.data.data.slice(0, 5));
+      } catch (err) {}
+    }
+    fetchAll();
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,18 +42,20 @@ function Landing() {
         </h1>
         <div className="w-[80vw] max-w-5xl mx-auto mb-10 text-center transition-all duration-700 relative overflow-hidden rounded-xl shadow-lg min-h-[360px]">
           {/* Background image for slide */}
-          <img
-            src={slides[slideIdx].image || '/img/mpox01.jpg'}
-            alt="slide background"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none select-none blur-[1px]"
-            style={{ zIndex: 0 }}
-          />
+          {slides[slideIdx] && (
+            <img
+              src={slides[slideIdx].image || '/img/mpox01.jpg'}
+              alt="slide background"
+              className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none select-none blur-[1px]"
+              style={{ zIndex: 0 }}
+            />
+          )}
           <div className="relative z-10 px-6 py-8">
             <div className="mb-2 text-xl font-bold text-blue-800 drop-shadow-lg bg-white/80 rounded px-4 py-2 shadow">
-              {slides[slideIdx].title}
+              {slides[slideIdx] ? slides[slideIdx].title : ''}
             </div>
             <p className="text-lg md:text-xl text-gray-800 mb-4 min-h-[48px] flex items-center justify-center drop-shadow-lg bg-white/80 rounded px-4 py-2 shadow">
-              {slides[slideIdx].content}
+              {slides[slideIdx] ? slides[slideIdx].content : ''}
             </p>
             <div className="flex justify-center gap-2 mt-2 mb-2">
               {slides.map((_, i) => (
