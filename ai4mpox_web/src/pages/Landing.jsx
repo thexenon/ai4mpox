@@ -7,6 +7,7 @@ function Landing() {
   const [reports, setReports] = useState([]);
   const [profiles, setProfiles] = useState([]);
   const [slides, setSlides] = useState([]);
+  const [slideIdx, setSlideIdx] = useState(0);
 
   useEffect(() => {
     fetchItems('slide').then((res) => setSlides(res.data.data.data));
@@ -19,13 +20,12 @@ function Landing() {
     );
   }, []);
 
-  const [slideIdx, setSlideIdx] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
       setSlideIdx((idx) => (idx + 1) % slides.length);
     }, 60000); // 1 minute
     return () => clearInterval(interval);
-  }, [slides.length]);
+  }, [slides, slides.length]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white p-0">
