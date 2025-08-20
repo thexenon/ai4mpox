@@ -159,8 +159,7 @@ function Landing() {
                   {report.address || 'No address'}
                 </div>
                 <div className="text-sm text-gray-600 mb-1">
-                  {report.occupation} | {report.gender} | Age: {report.age} |
-                  Status: {report.diseaseStatus}
+                  Status: {report.diseaseStatus.toUpperCase()}
                 </div>
                 <div className="text-xs text-gray-400">
                   {report.date && new Date(report.date).toLocaleDateString()}
