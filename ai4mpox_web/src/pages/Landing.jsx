@@ -41,7 +41,7 @@ function Landing() {
         <img
           src="/img/brand.jpg"
           alt="AI4Mpox Brand"
-          className="w-full max-w-5xl rounded-xl shadow-lg object-cover"
+          className="w-full max-w-xl rounded-xl shadow-lg object-cover"
         />
       </div>
       <div className="max-w-6xl mx-auto py-0 px-4">
