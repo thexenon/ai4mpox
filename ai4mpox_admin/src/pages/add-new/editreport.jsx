@@ -15,10 +15,6 @@ import { renderToString } from 'react-dom/server';
 import { submitUpdate } from '../../services/user_api';
 
 const initialState = {
-  gender: '',
-  age: '',
-  maritalStatus: '',
-  occupation: '',
   address: '',
   longitude: '',
   latitude: '',
@@ -173,10 +169,6 @@ export default function EditReport() {
         const report = res.data.data.data;
         if (report) {
           setForm({
-            gender: report.gender || '',
-            age: report.age || '',
-            maritalStatus: report.maritalStatus || '',
-            occupation: report.occupation || '',
             address: report.address || '',
             longitude: report.location?.coordinates?.[0]?.toString() || '',
             latitude: report.location?.coordinates?.[1]?.toString() || '',
@@ -221,10 +213,6 @@ export default function EditReport() {
     const reportId = params.get('id');
     try {
       const payload = {
-        gender: form.gender,
-        age: form.age,
-        maritalStatus: form.maritalStatus,
-        occupation: form.occupation,
         address: form.address,
         diseaseStatus: form.diseaseStatus,
         location: {
@@ -261,70 +249,32 @@ export default function EditReport() {
         className="space-y-4 bg-white p-6 rounded shadow"
       >
         <div>
-          <label className="block font-semibold mb-1">Gender</label>
+          <label className="block font-semibold mb-1">Address (Region)</label>
           <select
-            name="gender"
-            value={form.gender}
-            onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
-            required
-          >
-            <option value="">Select gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Age</label>
-          <input
-            type="number"
-            name="age"
-            value={form.age}
-            onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
-            min="0"
-            required
-          />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Marital Status</label>
-          <select
-            name="maritalStatus"
-            value={form.maritalStatus}
-            onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
-            required
-          >
-            <option value="">Select status</option>
-            <option value="single">Single</option>
-            <option value="married">Married</option>
-            <option value="divorced">Divorced</option>
-            <option value="widowed">Widowed</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Occupation</label>
-          <input
-            type="text"
-            name="occupation"
-            value={form.occupation}
-            onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
-            required
-          />
-        </div>
-        <div>
-          <label className="block font-semibold mb-1">Address</label>
-          <input
-            type="text"
             name="address"
             value={form.address}
             onChange={handleChange}
             className="w-full border rounded px-3 py-2"
             required
-          />
+          >
+            <option value="">Select region</option>
+            <option value="Greater Accra">Greater Accra</option>
+            <option value="Ashanti">Ashanti</option>
+            <option value="Northern">Northern</option>
+            <option value="Volta">Volta</option>
+            <option value="Western">Western</option>
+            <option value="Eastern">Eastern</option>
+            <option value="Central">Central</option>
+            <option value="Western North">Western North</option>
+            <option value="Bono">Bono</option>
+            <option value="Bono East">Bono East</option>
+            <option value="Oti">Oti</option>
+            <option value="Upper East">Upper East</option>
+            <option value="Upper West">Upper West</option>
+            <option value="Savanna">Savanna</option>
+            <option value="North East">North East</option>
+            <option value="Ahafo">Ahafo</option>
+          </select>
         </div>
         <div>
           <label className="block font-semibold mb-1">Disease Status</label>

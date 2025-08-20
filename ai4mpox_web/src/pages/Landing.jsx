@@ -36,57 +36,60 @@ function Landing() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white p-0">
-      <div className="max-w-6xl mx-auto py-12 px-4">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-center text-blue-700 mb-8 drop-shadow">
-          Welcome to AI4Mpox Ghana
-        </h1>
-        <div className="w-[80vw] max-w-5xl mx-auto mb-10 text-center transition-all duration-700 relative overflow-hidden rounded-xl shadow-lg min-h-[360px]">
-          {/* Background image for slide */}
-          {slides[slideIdx] && (
-            <img
-              src={slides[slideIdx].image || '/img/mpox01.jpg'}
-              alt="slide background"
-              className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none select-none blur-[1px]"
-              style={{ zIndex: 0 }}
-            />
-          )}
-          <div className="relative z-10 px-6 py-8">
-            <div className="mb-2 text-xl font-bold text-blue-800 drop-shadow-lg bg-white/80 rounded px-4 py-2 shadow">
-              {slides[slideIdx] ? slides[slideIdx].title : ''}
-            </div>
-            <p className="text-lg md:text-xl text-gray-800 mb-4 min-h-[48px] flex items-center justify-center drop-shadow-lg bg-white/80 rounded px-4 py-2 shadow">
-              {slides[slideIdx] ? slides[slideIdx].content : ''}
-            </p>
-            <div className="flex justify-center gap-2 mt-2 mb-2">
-              {slides.map((_, i) => (
-                <span
-                  key={i}
-                  className={`inline-block w-3 h-3 rounded-full ${
-                    i === slideIdx ? 'bg-blue-600' : 'bg-blue-200'
-                  }`}
-                ></span>
-              ))}
-            </div>
-            <div className="flex justify-center gap-4 mt-2">
-              <button
-                className="px-4 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 font-semibold transition"
-                onClick={() =>
-                  setSlideIdx((slideIdx - 1 + slides.length) % slides.length)
-                }
-                aria-label="Previous slide"
-              >
-                Prev
-              </button>
-              <button
-                className="px-4 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 font-semibold transition"
-                onClick={() => setSlideIdx((slideIdx + 1) % slides.length)}
-                aria-label="Next slide"
-              >
-                Next
-              </button>
-            </div>
-          </div>
+      {/* Brand image below header */}
+      <div className="max-w-6xl mx-auto px-4 mb-8 flex justify-center">
+        <img
+          src="/img/brand.jpg"
+          alt="AI4Mpox Brand"
+          className="w-full max-w-5xl rounded-xl shadow-lg object-cover"
+        />
+      </div>
+      <div className="max-w-6xl mx-auto py-0 px-4">
+        {/* Slides as grid of cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-10">
+          {slides.map((slide, idx) => (
+            <SlideCard key={idx} slide={slide} />
+          ))}
         </div>
+        {/* Partners Section */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-4 text-blue-800 flex items-center gap-2">
+            <span className="inline-block w-2 h-6 bg-blue-400 rounded mr-2"></span>
+            Project Partners
+          </h2>
+          <div className="flex flex-wrap gap-8 justify-center items-center mb-4">
+            <PartnerLogo
+              src="/img/partners/fcdo.png"
+              url="https://www.gov.uk/government/organisations/foreign-commonwealth-development-office"
+              alt="FCDO"
+            />
+            <PartnerLogo
+              src="/img/partners/idrc.jpg"
+              url="https://www.idrc.ca"
+              alt="IDRC"
+            />
+            <PartnerLogo
+              src="/img/partners/knust.jpg"
+              url="https://www.knust.edu.gh"
+              alt="KNUST"
+            />
+            <PartnerLogo
+              src="/img/partners/svm.jpg"
+              url="https://svm.knust.edu.gh/"
+              alt="SVM"
+            />
+            <PartnerLogo
+              src="/img/partners/uot.png"
+              url="https://www.utoronto.ca"
+              alt="UOT"
+            />
+            <PartnerLogo
+              src="/img/partners/york.png"
+              url="https://www.yorku.ca"
+              alt="York University"
+            />
+          </div>
+        </section>
         {/* News Section */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-4 text-blue-800 flex items-center gap-2">
@@ -209,6 +212,61 @@ function Landing() {
         </section>
       </div>
     </div>
+  );
+}
+
+function SlideCard({ slide }) {
+  const [flipped, setFlipped] = React.useState(false);
+  return (
+    <div
+      className={`flip-card relative w-full rounded-xl shadow-lg cursor-pointer group${
+        flipped ? ' flipped z-20' : ''
+      }`}
+      onClick={() => setFlipped((f) => !f)}
+      tabIndex={0}
+      role="button"
+      onKeyPress={(e) => {
+        if (e.key === 'Enter') setFlipped((f) => !f);
+      }}
+      style={{
+        minHeight: flipped ? '256px' : '256px',
+        height: flipped ? 'auto' : '16rem',
+        maxHeight: flipped ? '42rem' : '16rem',
+      }}
+    >
+      <div className="flip-card-inner rounded-xl h-full w-full">
+        {/* Front Side */}
+        <div
+          className="flip-card-front absolute inset-0 w-full h-full rounded-xl flex flex-col justify-end items-center p-4 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${slide.image || '/img/mpox01.jpg'})`,
+            minHeight: '256px',
+            maxHeight: '16rem',
+          }}
+        >
+          <div className="bg-white/80 rounded px-4 py-2 shadow text-xl font-bold text-blue-800 mb-2 w-full text-center">
+            {slide.title}
+          </div>
+        </div>
+        {/* Back Side */}
+        <div className="flip-card-back inset-0 w-full rounded-xl flex flex-col justify-center items-center p-4 bg-white/90 text-gray-800 text-lg overflow-y-auto pt-16">
+          <div className="text-center">{slide.content}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PartnerLogo({ src, url, alt }) {
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" className="block">
+      <img
+        src={src}
+        alt={alt}
+        className="h-28 w-auto object-contain rounded shadow hover:scale-105 transition-transform"
+        style={{ maxWidth: '300px' }}
+      />
+    </a>
   );
 }
 

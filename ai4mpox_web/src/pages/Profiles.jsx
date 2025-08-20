@@ -151,7 +151,8 @@ function ProfileModal({ person, onClose }) {
             )}
             {person.contact && (
               <div className="text-center text-sm md:text-base text-gray-500 mb-2">
-                <span className="font-semibold">Contact:</span> {person.contact}
+                <span className="font-semibold">Contact:</span> +233-
+                {person.contact}
               </div>
             )}
             {person.description && (

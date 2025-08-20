@@ -12,6 +12,14 @@ function Navbar() {
     <div className="sticky top-0 z-50 w-full">
       <nav className="bg-gray-800 text-white py-5 px-8 w-full shadow-lg">
         <ul className="flex gap-8 justify-end">
+          <li>
+            <img
+              src="/img/ai4mpox.png"
+              alt="AI4Mpox Logo"
+              className="h-10 w-auto object-contain rounded-full align-middle"
+            />
+          </li>
+          <li className="font-bold text-3xl text-red-600">AI4Mpox Ghana</li>
           {navLinks.map((link) => (
             <li key={link.to}>
               <Link

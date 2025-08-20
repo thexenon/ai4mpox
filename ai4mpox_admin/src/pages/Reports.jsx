@@ -56,20 +56,6 @@ const Reports = () => {
               }}
             >
               <div className="mb-2">
-                <span className="font-semibold">Age:</span> {report.age}
-              </div>
-              <div className="mb-2">
-                <span className="font-semibold">Gender:</span> {report.gender}
-              </div>
-              <div className="mb-2">
-                <span className="font-semibold">Marital Status:</span>{' '}
-                {report.maritalStatus}
-              </div>
-              <div className="mb-2">
-                <span className="font-semibold">Occupation:</span>{' '}
-                {report.occupation}
-              </div>
-              <div className="mb-2">
                 <span className="font-semibold">Address:</span> {report.address}
               </div>
               <div className="mb-2">

@@ -21,18 +21,23 @@ const newsSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    images: [{
-      type: String,
-    }],
-    socials: [{
-      type: String
-    }],
+    images: [
+      {
+        type: String,
+      },
+    ],
+    socials: [
+      {
+        type: String,
+      },
+    ],
     active: {
       type: Boolean,
       default: true,
     },
   },
   {
+    timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   },

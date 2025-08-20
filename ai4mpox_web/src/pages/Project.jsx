@@ -15,35 +15,19 @@ const markerIcon = new L.Icon({
 });
 
 function PinBadge({ report }) {
-  return (
-    <div className="absolute -top-3 -right-3 z-[1000]">
-      <div className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded shadow border border-white min-w-[40px] text-center">
-        {report.age ? `Age: ${report.age}` : ''}
-        {report.gender ? ` ${report.gender}` : ''}
-      </div>
-    </div>
-  );
+  return null;
 }
 
 function getStats(reports) {
   // Disease status counts
   const diseaseStatus = {};
-  const gender = {};
-  const region = {};
   reports.forEach((r) => {
     // Disease status
     if (r.diseaseStatus)
       diseaseStatus[r.diseaseStatus] =
         (diseaseStatus[r.diseaseStatus] || 0) + 1;
-    // Gender
-    if (r.gender) gender[r.gender] = (gender[r.gender] || 0) + 1;
-    // Region (from address, crude split by first word or comma)
-    if (r.address) {
-      const reg = r.address.split(',')[0].trim();
-      if (reg) region[reg] = (region[reg] || 0) + 1;
-    }
   });
-  return { diseaseStatus, gender, region };
+  return { diseaseStatus };
 }
 
 // Helper: get region from coordinates (simple bounding boxes for demonstration)
@@ -182,7 +166,6 @@ function StatsPanel({ reports }) {
     'deceased',
     'other',
   ];
-  const ALL_GENDERS = ['male', 'female', 'other'];
   const ALL_REGIONS = [
     'Greater Accra',
     'Ashanti',
@@ -213,8 +196,6 @@ function StatsPanel({ reports }) {
 
   // Disease status counts
   const statusCounts = {};
-  // Gender counts
-  const genderCounts = {};
   // Region counts
   const regionCounts = {};
 
@@ -222,9 +203,6 @@ function StatsPanel({ reports }) {
     // Disease status
     const status = r.diseaseStatus || 'unknown';
     statusCounts[status] = (statusCounts[status] || 0) + 1;
-    // Gender
-    const gender = r.gender || 'unknown';
-    genderCounts[gender] = (genderCounts[gender] || 0) + 1;
     // Region
     let region = 'Unknown';
     if (r.location && r.location.coordinates) {
@@ -236,9 +214,6 @@ function StatsPanel({ reports }) {
   // Ensure all possible values are shown, even if zero
   ALL_STATUSES.forEach((status) => {
     if (!(status in statusCounts)) statusCounts[status] = 0;
-  });
-  ALL_GENDERS.forEach((gender) => {
-    if (!(gender in genderCounts)) genderCounts[gender] = 0;
   });
   ALL_REGIONS.forEach((region) => {
     if (!(region in regionCounts)) regionCounts[region] = 0;
@@ -263,20 +238,6 @@ function StatsPanel({ reports }) {
             >
               <span className="capitalize">{status}</span>
               <span className="ml-2">{statusCounts[status]}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="mb-4">
-        <div className="font-semibold text-gray-700 mb-1">By Gender:</div>
-        <ul className="ml-2 flex flex-wrap gap-2">
-          {ALL_GENDERS.map((gender) => (
-            <li
-              key={gender}
-              className="px-3 py-1 rounded-full bg-gray-100 text-gray-700 font-bold flex items-center"
-            >
-              <span className="capitalize">{gender}</span>
-              <span className="ml-2">{genderCounts[gender]}</span>
             </li>
           ))}
         </ul>
@@ -372,16 +333,11 @@ function Project() {
                     {report.address || 'No address'}
                   </div>
                   <div className="text-sm text-gray-600 mb-1">
-                    {report.occupation} | {report.gender} | Age: {report.age} |
                     Status: {report.diseaseStatus}
                   </div>
                   <div>
-                    <span className="font-semibold">Occupation:</span>{' '}
-                    {report.occupation}
-                  </div>
-                  <div>
-                    <span className="font-semibold">Marital Status:</span>{' '}
-                    {report.maritalStatus}
+                    <span className="font-semibold">Region:</span>{' '}
+                    {report.address}
                   </div>
                 </div>
               </Popup>

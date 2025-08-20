@@ -2,16 +2,6 @@ const mongoose = require('mongoose');
 
 const reportSchema = new mongoose.Schema(
   {
-    gender: {
-      type: String,
-      enum: ['male', 'female', 'other'],
-      required: true,
-    },
-    maritalStatus: {
-      type: String,
-      enum: ['single', 'married', 'divorced', 'widowed', 'other'],
-      required: true,
-    },
     location: {
       type: {
         type: String,
@@ -23,18 +13,26 @@ const reportSchema = new mongoose.Schema(
         required: true,
       },
     },
-    occupation: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     address: {
       type: String,
-      required: true,
-      trim: true,
-    },
-    age: {
-      type: Number,
+      enum: [
+        'Greater Accra',
+        'Ashanti',
+        'Northern',
+        'Volta',
+        'Western',
+        'Eastern',
+        'Central',
+        'Western North',
+        'Bono',
+        'Bono East',
+        'Oti',
+        'Upper East',
+        'Upper West',
+        'Savanna',
+        'North East',
+        'Ahafo',
+      ],
       required: true,
       trim: true,
     },
@@ -52,6 +50,8 @@ const reportSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   },
 );
 
