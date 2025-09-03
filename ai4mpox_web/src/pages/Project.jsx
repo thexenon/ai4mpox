@@ -4,6 +4,15 @@ import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
+// Color map for disease status (top-level, accessible everywhere)
+const STATUS_COLORS = {
+  suspected: '#facc15', // yellow-400
+  confirmed: '#ef4444', // red-500
+  recovered: '#22c55e', // green-500
+  deceased: '#6b7280', // gray-500
+  other: '#3b82f6', // blue-500
+};
+
 // Custom marker icon
 const markerIcon = new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
@@ -260,6 +269,82 @@ function StatsPanel({ reports }) {
   );
 }
 
+function getMarkerIcon(status) {
+  // SVG pin with color
+  const color = STATUS_COLORS[status] || '#3b82f6';
+  const svg = encodeURIComponent(
+    `<svg width="32" height="41" viewBox="0 0 32 41" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="16" cy="13" rx="13" ry="13" fill="${color}"/><rect x="13" y="13" width="6" height="20" rx="3" fill="${color}"/></svg>`
+  );
+  return new L.Icon({
+    iconUrl: `data:image/svg+xml,${svg}`,
+    iconSize: [32, 41],
+    iconAnchor: [16, 41],
+    popupAnchor: [0, -41],
+  });
+}
+
+function BarChart({ reports }) {
+  // Defensive: ensure reports is always an array
+  const safeReports = Array.isArray(reports) ? reports : [];
+  const ALL_REGIONS = [
+    'Greater Accra',
+    'Ashanti',
+    'Northern',
+    'Volta',
+    'Western',
+    'Eastern',
+    'Central',
+    'Western North',
+    'Bono',
+    'Bono East',
+    'Oti',
+    'Upper East',
+    'Upper West',
+    'Savanna',
+    'North East',
+    'Ahafo',
+  ];
+  // Count cases by region
+  const regionCounts = {};
+  safeReports.forEach((r) => {
+    let region = r.address || 'Unknown';
+    regionCounts[region] = (regionCounts[region] || 0) + 1;
+  });
+  // Ensure all regions are shown
+  ALL_REGIONS.forEach((region) => {
+    if (!(region in regionCounts)) regionCounts[region] = 0;
+  });
+  const max = Math.max(...ALL_REGIONS.map((r) => regionCounts[r] || 0), 1);
+  return (
+    <div className="fixed bottom-8 right-8 z-[1001] bg-white bg-opacity-95 rounded-xl shadow-2xl p-8 w-[420px] border-2 border-blue-300 text-base flex flex-col items-center">
+      <div className="font-bold text-blue-700 mb-4 text-lg">
+        Cases by Region
+      </div>
+      <div className="w-full flex flex-col gap-3">
+        {ALL_REGIONS.map((region) => (
+          <div key={region} className="flex items-center gap-3">
+            <span className="capitalize w-32 font-semibold text-blue-700">
+              {region}
+            </span>
+            <div className="flex-1 h-6 bg-gray-100 rounded relative">
+              <div
+                className="h-6 rounded bg-blue-400"
+                style={{
+                  width: `${((regionCounts[region] || 0) / max) * 100}%`,
+                  transition: 'width 0.5s',
+                }}
+              ></div>
+              <span className="absolute right-2 top-1 text-xs font-bold text-gray-700">
+                {regionCounts[region] || 0}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Project() {
   const [reports, setReports] = useState([]);
   // Center on Ghana
@@ -297,12 +382,14 @@ function Project() {
   const stats = getStats(reports);
 
   return (
-    <div className="fixed inset-0 z-0">
+    <div className="fixed inset-0 z-0 bg-gradient-to-br from-blue-100 via-blue-300 to-purple-200 overflow-hidden">
+      <VirusCellAnimation />
       <MapContainer
         center={center}
         zoom={7}
         scrollWheelZoom={true}
         style={{ height: '100vh', width: '100vw' }}
+        className="animate-fade-in"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -311,7 +398,7 @@ function Project() {
         {/* Ghana regional boundary (simple polygon) */}
         <GeoJSON
           data={ghanaGeoJson}
-          style={{ color: '#2563eb', weight: 2, fillOpacity: 0.05 }}
+          style={{ color: '#2563eb', weight: 2, fillOpacity: 0.08 }}
         />
         {reports.map((report, idx) =>
           report.location && report.location.coordinates ? (
@@ -321,14 +408,10 @@ function Project() {
                 report.location.coordinates[1],
                 report.location.coordinates[0],
               ]}
-              icon={markerIcon}
+              icon={getMarkerIcon(report.diseaseStatus)}
             >
-              {/* Badge overlay */}
-              <div style={{ position: 'relative' }}>
-                <PinBadge report={report} />
-              </div>
               <Popup>
-                <div className="text-sm">
+                <div className="text-sm animate-fade-in">
                   <div className="font-bold text-blue-700 mb-1">
                     {report.address || 'No address'}
                   </div>
@@ -346,9 +429,50 @@ function Project() {
         )}
       </MapContainer>
       {/* Stats panel at bottom left */}
-      <StatsPanel reports={reports} />
+      <div className="z-[1001] animate-fade-in">
+        <StatsPanel reports={reports} />
+      </div>
+      {/* Bar chart at bottom right */}
+      <div className="z-[1001] animate-fade-in">
+        <BarChart reports={reports} />
+      </div>
     </div>
   );
 }
 
-export default Project;
+function VirusCellAnimation() {
+  return (
+    <svg
+      className="absolute top-0 right-0 animate-virus-spin pointer-events-none opacity-30"
+      width="180"
+      height="180"
+      viewBox="0 0 180 180"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ zIndex: 0 }}
+    >
+      <circle cx="90" cy="90" r="70" fill="url(#virusGradient)" />
+      <g>
+        <circle cx="90" cy="40" r="8" fill="#a78bfa" />
+        <circle cx="140" cy="90" r="8" fill="#818cf8" />
+        <circle cx="90" cy="140" r="8" fill="#f472b6" />
+        <circle cx="40" cy="90" r="8" fill="#38bdf8" />
+        <circle cx="120" cy="60" r="6" fill="#fbbf24" />
+        <circle cx="60" cy="120" r="6" fill="#34d399" />
+      </g>
+      <defs>
+        <radialGradient
+          id="virusGradient"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="translate(90 90) scale(70)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#818cf8" />
+          <stop offset="1" stopColor="#f472b6" />
+        </radialGradient>
+      </defs>
+    </svg>
+  );
+}

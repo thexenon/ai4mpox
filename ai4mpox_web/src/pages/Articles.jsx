@@ -13,15 +13,16 @@ function Articles() {
   }, []);
 
   return (
-    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-50 to-white">
-      <h1 className="text-4xl font-extrabold mb-8 text-center text-blue-700 drop-shadow">
+    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-100 via-blue-300 to-purple-200 relative overflow-hidden">
+      <VirusCellAnimation />
+      <h1 className="text-4xl font-extrabold mb-8 text-center text-blue-700 drop-shadow animate-fade-in">
         Mpox News
       </h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {articles.map((article, idx) => (
           <div
             key={idx}
-            className={`bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 cursor-pointer border-2 hover:border-blue-400`}
+            className={`bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 cursor-pointer border-2 hover:border-blue-400 hover:scale-[1.03] animate-fade-in`}
             onClick={() => setExpanded(idx)}
             tabIndex={0}
             role="button"
@@ -79,6 +80,43 @@ function Articles() {
         </div>
       )}
     </div>
+  );
+}
+
+function VirusCellAnimation() {
+  return (
+    <svg
+      className="absolute top-0 right-0 animate-virus-spin pointer-events-none opacity-30"
+      width="180"
+      height="180"
+      viewBox="0 0 180 180"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ zIndex: 0 }}
+    >
+      <circle cx="90" cy="90" r="70" fill="url(#virusGradient)" />
+      <g>
+        <circle cx="90" cy="40" r="8" fill="#a78bfa" />
+        <circle cx="140" cy="90" r="8" fill="#818cf8" />
+        <circle cx="90" cy="140" r="8" fill="#f472b6" />
+        <circle cx="40" cy="90" r="8" fill="#38bdf8" />
+        <circle cx="120" cy="60" r="6" fill="#fbbf24" />
+        <circle cx="60" cy="120" r="6" fill="#34d399" />
+      </g>
+      <defs>
+        <radialGradient
+          id="virusGradient"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="translate(90 90) scale(70)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#818cf8" />
+          <stop offset="1" stopColor="#f472b6" />
+        </radialGradient>
+      </defs>
+    </svg>
   );
 }
 

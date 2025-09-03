@@ -1,6 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { fetchItems } from '../services/api';
 
+function VirusCellAnimation() {
+  return (
+    <div className="flex justify-center mb-6 animate-fade-in">
+      <svg
+        width="80"
+        height="80"
+        viewBox="0 0 80 80"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="virus-spin drop-shadow-lg"
+      >
+        <circle cx="40" cy="40" r="28" fill="url(#virusGradient)" />
+        <g stroke="#3b82f6" strokeWidth="2">
+          <line x1="40" y1="12" x2="40" y2="2" />
+          <line x1="40" y1="68" x2="40" y2="78" />
+          <line x1="12" y1="40" x2="2" y2="40" />
+          <line x1="68" y1="40" x2="78" y2="40" />
+          <line x1="18" y1="18" x2="8" y2="8" />
+          <line x1="62" y1="18" x2="72" y2="8" />
+          <line x1="18" y1="62" x2="8" y2="72" />
+          <line x1="62" y1="62" x2="72" y2="72" />
+        </g>
+        <circle cx="40" cy="40" r="18" fill="#fff" fillOpacity="0.15" />
+        <circle cx="40" cy="40" r="8" fill="#3b82f6" fillOpacity="0.3" />
+        <defs>
+          <radialGradient
+            id="virusGradient"
+            cx="0"
+            cy="0"
+            r="1"
+            gradientTransform="translate(40 40) scale(28)"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#60a5fa" />
+            <stop offset="1" stopColor="#1e3a8a" />
+          </radialGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+}
+
 function Profiles() {
   const [profiles, setProfiles] = useState([]);
   const [selected, setSelected] = useState(null);
@@ -12,15 +54,16 @@ function Profiles() {
   }, []);
 
   return (
-    <div className="p-6 min-h-screen bg-gray-50">
-      <h1 className="text-3xl font-bold mb-8 text-center text-blue-700">
+    <div className="p-6 min-h-screen bg-gradient-to-br from-blue-100 via-blue-300 to-blue-500 animate-fade-in">
+      <VirusCellAnimation />
+      <h1 className="text-3xl font-bold mb-8 text-center text-blue-700 drop-shadow-lg animate-fade-in">
         Meet Our Team
       </h1>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         {profiles.map((person, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center cursor-pointer hover:shadow-2xl transition group"
+            className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center cursor-pointer hover:shadow-2xl transition group animate-fade-in"
             onClick={() => setSelected(person)}
             tabIndex={0}
             role="button"
@@ -32,7 +75,7 @@ function Profiles() {
               <img
                 src={person.image}
                 alt={person.name}
-                className="w-50 h-50 object-cover rounded-full border-4 border-blue-200 mb-4 group-hover:scale-105 transition-transform"
+                className="w-44 h-44 object-cover rounded-full border-4 border-blue-200 mb-4 group-hover:scale-110 transition-transform duration-300"
               />
             )}
             <h2 className="text-xl font-bold text-gray-800 mb-1 group-hover:text-blue-700 transition-colors">
@@ -58,7 +101,7 @@ function Profiles() {
 
 function ProfileModal({ person, onClose }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 animate-fade-in">
       <div
         className="bg-white rounded-xl shadow-2xl w-full max-w-3xl p-8 relative animate-fade-in flex justify-center"
         style={{ minHeight: '400px', maxHeight: '80vh', overflow: 'hidden' }}
@@ -76,7 +119,7 @@ function ProfileModal({ person, onClose }) {
               <img
                 src={person.image}
                 alt={person.name}
-                className="w-56 h-56 object-cover rounded-full border-4 border-blue-200 mb-4"
+                className="w-56 h-56 object-cover rounded-full border-4 border-blue-200 mb-4 animate-fade-in"
               />
             )}
             <h2 className="text-2xl md:text-3xl font-bold text-center text-blue-700 mb-1">
@@ -145,18 +188,18 @@ function ProfileModal({ person, onClose }) {
             style={{ maxHeight: '64vh' }}
           >
             {person.bio && (
-              <div className="text-gray-700 mb-3 text-center whitespace-pre-line text-base md:text-lg">
+              <div className="text-gray-700 mb-3 text-center whitespace-pre-line text-base md:text-lg animate-fade-in">
                 {person.bio}
               </div>
             )}
             {person.contact && (
-              <div className="text-center text-sm md:text-base text-gray-500 mb-2">
+              <div className="text-center text-sm md:text-base text-gray-500 mb-2 animate-fade-in">
                 <span className="font-semibold">Contact:</span> +233-
                 {person.contact}
               </div>
             )}
             {person.description && (
-              <div className="text-center text-sm md:text-base text-gray-500 mb-2">
+              <div className="text-center text-sm md:text-base text-gray-500 mb-2 animate-fade-in">
                 <span className="font-semibold">Description:</span>{' '}
                 {person.description}
               </div>
