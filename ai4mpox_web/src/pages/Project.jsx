@@ -476,3 +476,5 @@ function VirusCellAnimation() {
     </svg>
   );
 }
+
+export default Project;
